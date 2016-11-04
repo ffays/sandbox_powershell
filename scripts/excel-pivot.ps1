@@ -2,7 +2,7 @@
 # Add-Type -Assembly PresentationCore
 
 $downloadsFolder = (Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders\').'{374DE290-123F-4565-9164-39C4925E467B}'
-$fileName = Join-Path $downloadsFolder -ChildPath "export.xlsx"
+$fileName = Join-Path $downloadsFolder -ChildPath "excel-pivot-data.xlsx"
 
 # Extract data via SQL
 function OleDbQuery([System.Data.OleDb.OleDbConnection]$oleDbConn, [String]$sql) {
