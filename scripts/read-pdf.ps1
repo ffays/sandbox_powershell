@@ -1,4 +1,4 @@
-﻿# For each file that does not contain text is $sourceFolder, create a symbolic link from $sourceFolder into $redoFodler
+﻿# For each file that does not contain text in $sourceFolder, create a symbolic link from $sourceFolder into $redoFodler
 
 # Note: itextsharp.dll must be located in the user's "Dowloads" folder
 
