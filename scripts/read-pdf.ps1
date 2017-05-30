@@ -41,7 +41,7 @@ Get-ChildItem -File -Recurse $targetFolder | Where-Object Extension -EQ '.pdf' |
     }
     if(-Not (Test-Path -Path $redoFilename)){
         # Make symbolic link between source folder and redo folder
-        New-Item -Path $redoFilename -ItemType SymbolicLink -Value $sourceFilename
+        New-Item -Path $redoFilename -ItemType SymbolicLink -Value $sourceFilename | Out-Null
     }
   }
 }
