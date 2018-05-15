@@ -1,7 +1,8 @@
 ﻿$ErrorActionPreference = "Stop"
+Remove-Variable * -ErrorAction SilentlyContinue
 
-$list1 = @()
-$list2 = @()
+$list1 = [System.Collections.ArrayList]@()
+$list2 = [System.Collections.ArrayList]@()
 foreach ($a in [AppDomain]::CurrentDomain.GetAssemblies()) {
     if (-not $a.IsDynamic) {
 	    $parts = $a.Location.Split('\\')
@@ -17,13 +18,13 @@ foreach ($a in [AppDomain]::CurrentDomain.GetAssemblies()) {
                     $co2 | Add-Member -type NoteProperty -name Namespace -Value $t.Namespace
 			    }
                 $co2 | Add-Member -type NoteProperty -name Name -Value $t.Name
-                $list2 += $co2
+                $list2.Add($co2) | Out-Null
 		    }
 	    }
-        $list1 += $co1
+        $list1.Add($co1) | Out-Null
     }
 }
 
-$list1
-$list2
+$list1 | ft
+$list2 | ft
 
