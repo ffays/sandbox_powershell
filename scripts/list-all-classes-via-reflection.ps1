@@ -1,29 +1,29 @@
 ﻿$ErrorActionPreference = "Stop"
 
-$builder = [System.Text.StringBuilder]::new()
-$builder2 = [System.Text.StringBuilder]::new()
-
+$list1 = @()
+$list2 = @()
 foreach ($a in [AppDomain]::CurrentDomain.GetAssemblies()) {
-	if (-not $a.IsDynamic) {
-		$parts = $a.Location.Split('\\')
-		$dllFileName = $parts[$parts.Length - 1]
-		$builder2.Append($dllFileName) | Out-Null
-		$builder2.Append(",") | Out-Null
-		$builder2.Append($a.Location) | Out-Null
-		$builder2.AppendLine() | Out-Null
-		foreach ($t in $a.GetTypes()) {
-			 if ($t.IsPublic) {
-				$builder.Append($dllFileName) | Out-Null
-				$builder.Append(",") | Out-Null
-				if ($t.Namespace -ne $null) {
-					$builder.Append($t.Namespace) | Out-Null
-					$builder.Append(".") | Out-Null
-				}
-				$builder.Append($t.Name) | Out-Null
-				$builder.AppendLine() | Out-Null
-			}
-		}
-	}
+    if (-not $a.IsDynamic) {
+	    $parts = $a.Location.Split('\\')
+	    $dllFileName = $parts[$parts.Length - 1]
+        $co1 = New-Object PSCustomObject
+        $co1 | Add-Member -type NoteProperty -name DLL -Value $dllFileName
+        $co1 | Add-Member -type NoteProperty -name Location -Value $a.Location
+	    foreach ($t in $a.GetTypes()) {
+		    if ($t.IsPublic) {
+                $co2 = New-Object PSCustomObject
+                $co2 | Add-Member -type NoteProperty -name DLL -Value $dllFileName
+			    if ($t.Namespace -ne $null) {
+                    $co2 | Add-Member -type NoteProperty -name Namespace -Value $t.Namespace
+			    }
+                $co2 | Add-Member -type NoteProperty -name Name -Value $t.Name
+                $list2 += $co2
+		    }
+	    }
+        $list1 += $co1
+    }
 }
-$builder.Append($builder2.ToString()) | Out-Null
-Write-Host $builder.ToString()
+
+$list1
+$list2
+
