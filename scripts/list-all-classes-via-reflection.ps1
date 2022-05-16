@@ -25,6 +25,5 @@ foreach ($a in [AppDomain]::CurrentDomain.GetAssemblies()) {
     }
 }
 
-$list1 | ft
-$list2 | ft
-
+$list1 | Format-Table -Property * -AutoSize | Out-String -Width 4096
+$list2 | Format-Table -Property * -AutoSize | Out-String -Width 4096
